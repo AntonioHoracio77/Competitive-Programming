@@ -38,31 +38,3 @@ int query(int pos,int ini,int fim,int p,int q){
 }
 
 
-
-// segment tree para adição de um valor v aos elementos em um intervalo
-// complexidade aproximada O(logN)
-int query(int pos,int ini,int fim,int id,int val){
-    if(id < ini || id > fim)
-        return 0;
-    
-    if(id >= ini && id <= fim)
-        return seg[pos];
-        
-    int meio = (ini + fim) / 2;
-    int esq = 2 * pos + 1, dir = 2 * pos + 2;
-    return query(esq,ini,meio,id,val) + query(dir,meio + 1,fim,id,val);
-}
-
-// complexidade aproximada O(logN)
-void updateQuery(int pos,int ini,int fim,int p,int q,int v){
-    if(p <= ini && fim <= q)
-        seg[pos] += v;
-    else if(q < ini || p > fim)
-        return;
-    int meio = (ini + fim) / 2;
-    int esq = 2 * pos + 1,dir = 2 * pos + 2;
-    updateQuery(esq,ini,meio,p,q,v);
-    updateQuery(dir,meio + 1,fim,p,q,v);
-    
-}
-
