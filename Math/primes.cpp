@@ -12,7 +12,7 @@ void sieveOfErasthostenes(int n){
     for(ll i = 2; i <= n; i ++){
         if(primes[i] == 1){
             for(ll j = i * i; j <= n; j += i)
-                primes[i] = 0;
+                primes[j] = 0;
         }
     }
 }
