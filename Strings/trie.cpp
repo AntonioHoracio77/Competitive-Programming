@@ -1,52 +1,41 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 
 using namespace std;
 
-typedef struct tn{
-    tn *alp[26];
-    bool isLast;
-    int ct;
-}trieNode;
+struct node {
+	node *nxt[26];
+	bool is_end;
+	node() {
+		for (int i = 0; i < 26; i++) nxt[i] = NULL;
+		is_end = false;
+	}
+};
 
+node *root;
 
-trieNode *getNode(){
-    trieNode *node = new trieNode;
-    node->isLast = false;
-    node->ct = 0;
-    for(int i = 0; i < 26; i ++){
-        node->alp[i] = NULL;
-    }
-    return node;
+void insert_trie(string s) {
+	node *cur = root;
+	for (int i = 0; i < s.size(); i++) {
+		int imap = s[i] - 'a';
+		// new node
+		if (cur->nxt[imap] == NULL) {
+			cur->nxt[imap] = new node();
+		}
+		// goto that node
+		cur = cur->nxt[imap];
+	}
+	// cur -> last node
+	cur->is_end = true;
 }
 
-void insert(trieNode *root,string w){
-    trieNode *node = root;
-    int idx;
-        for(int i = 0; i < w.size(); i ++){
-            idx = w[i] - 'a';
-            if(!node->alp[idx])
-                node->alp[idx] = getNode();
-            node = node->alp[idx];
-            node->ct ++;
-                
-        }
-
-}
-
-bool search(trieNode *root,string s){
-    if(root == NULL)
-        return false;
-    trieNode *node = root;
-    int idx,tam = s.size();
-    for(int i = 0; i < tam; i ++){
-        idx = s[i] - 'a';
-        if(!node->alp[idx])
-            return false;
-
-        node = node->alp[idx];
-    }
-    return true;
-
-    
+// O(|s|)
+bool search_trie(string s) {
+	node *cur = root;
+	for (int i = 0; i < s.size(); i++) {
+		int imap = s[i] - 'a';
+		if (cur->nxt[imap] == NULL) return false;
+		cur = cur->nxt[imap];
+	}
+	return cur->is_end;
 }
 

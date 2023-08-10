@@ -17,6 +17,8 @@ void sieveOfErasthostenes(int n){
     }
 }
 
+
+
 bool isPrime(int n){
     if(n == 1 || n == 0)
         return false;
